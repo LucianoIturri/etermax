@@ -1,4 +1,5 @@
 package org.example;
+import com.google.gson.Gson;
 import org.example.services.ListService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import java.util.Arrays;
 import org.example.repositories.*;
+import org.example.database.Database;
+
 /**
  * Hello world!
  *
@@ -16,7 +19,7 @@ import org.example.repositories.*;
 public class App 
 {
     public static void main( String[] args ) {
-        ListRepository.init();
+        Database.init();
         SpringApplication.run(App.class, args);
     }
 
@@ -31,7 +34,6 @@ public class App
             for (String beanName : beanNames) {
                 System.out.println(beanName);
             }
-
         };
     }
 }

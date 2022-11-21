@@ -1,11 +1,8 @@
 package org.example.controllers;
 
 import java.util.ArrayList;
-import java.util.Locale;
-
 import com.google.gson.Gson;
 import org.example.models.List;
-import org.example.models.Song;
 import org.example.services.ListService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;

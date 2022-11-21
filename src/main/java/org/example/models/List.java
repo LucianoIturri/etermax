@@ -2,6 +2,8 @@ package org.example.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.models.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Data
