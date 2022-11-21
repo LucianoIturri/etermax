@@ -17,13 +17,51 @@ public class Database {
         this.gson = gson;
     }
     public static void init(){
+        initSongs();
         initLists();
     }
 
     public static void initLists(){
         lists = new ArrayList<List>();
-    }
+        ArrayList<Song> playlist1 = new ArrayList<>();
+        ArrayList<Song> playlist2 = new ArrayList<>();
+        ArrayList<Song> playlist3 = new ArrayList<>();
+        ArrayList<Song> playlist4 = new ArrayList<>();
 
+        playlist1.add(getSongs().get(0));
+        playlist1.add(getSongs().get(2));
+        playlist1.add(getSongs().get(4));
+
+        playlist2.add(getSongs().get(1));
+        playlist2.add(getSongs().get(3));
+        playlist2.add(getSongs().get(5));
+
+        playlist3.add(getSongs().get(4));
+        playlist3.add(getSongs().get(6));
+        playlist3.add(getSongs().get(8));
+
+        playlist4.add(getSongs().get(5));
+        playlist4.add(getSongs().get(7));
+        playlist4.add(getSongs().get(9));
+
+        lists.add(new List(1, "List I", playlist1, 0));
+        lists.add(new List(2, "List II", playlist2, 1));
+        lists.add(new List(3, "List III", playlist3, 2));
+        lists.add(new List(4, "List IV", playlist4, 3));
+    }
+    public static void initSongs(){
+        songs = new ArrayList<Song>();
+        songs.add(new Song("Californication", "RHCP", "Californication"));
+        songs.add(new Song("Bring Me To Life", "Evanescence", "Fallen"));
+        songs.add(new Song("Scar Tissues", "RHCP", "Californication"));
+        songs.add(new Song("Around the World", "RHCP", "Californication"));
+        songs.add(new Song("Other Side", "RHCP", "Californication"));
+        songs.add(new Song("Get On Top", "RHCP", "Californication"));
+        songs.add(new Song("Parallel Universe", "RHCP", "Californication"));
+        songs.add(new Song("Somewhere I Belong", "Linkin Park", "Meteora"));
+        songs.add(new Song("Numb", "Linkin Park", "Meteora"));
+        songs.add(new Song("Easier To run", "Linkin Park", "Meteora"));
+    }
     public String lists(){
         String json_lists = this.gson.toJson(this.getLists());
 
@@ -67,9 +105,7 @@ public class Database {
 
         return this.lists();
     }
-    public ArrayList<List> getLists() {
-        return lists;
-    }
+
     private void setLists(ArrayList<List> lists){
         this.lists = lists;
     }
@@ -82,5 +118,12 @@ public class Database {
             loop++;
         }
         this.setLists(aux);
+    }
+
+    public static ArrayList<List> getLists() {
+        return lists;
+    }
+    public static ArrayList<Song> getSongs() {
+        return songs;
     }
 }

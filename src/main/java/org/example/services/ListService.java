@@ -54,7 +54,6 @@ public class ListService {
     private void updateList(List found_list, List list){
         found_list.setName(list.getName());
         found_list.setSongs(list.getSongs());
-        System.out.print(found_list);
         this.repo.updateList(found_list);
     }
 

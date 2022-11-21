@@ -12,15 +12,20 @@ import org.example.models.List;
 import org.example.repositories.*;
 import java.util.ArrayList;
 import org.example.database.Database;
+
+import javax.xml.crypto.Data;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ListServiceTest {
     @InjectMocks
-    private ListService service;
+    public ListService service;
     @Mock
-    private ListRepository repo;
+    public ListRepository repo;
+
+    public Database db;
     private List list;
     private Song song;
     private ArrayList<Song> songs;
@@ -29,17 +34,17 @@ class ListServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-
+        Database.init();
         lists = mock(ArrayList.class);
 
     }
 
     @Test
     void getLists() {
-        ArrayList<List> expected = new ArrayList<List>();
         when(service.getLists())
-                .thenReturn(expected);
+                .thenReturn(Database.getLists());
         assertNotNull(service.getLists());
+        assertEquals(service.getLists(), Database.getLists());
     }
 
     @Test
@@ -50,7 +55,6 @@ class ListServiceTest {
 
         when(service.createList(list))
                 .thenReturn(lists);
-
         assertEquals(list, new List(1, "Test List", songs, 0), "PASSED");
         assertNotEquals(list, new List(1, "Other List", songs, 0), "PASSED");
         assertEquals(lists.size(), 1, "PASSED");
@@ -59,23 +63,31 @@ class ListServiceTest {
 
     @Test
     void editList() {
-        List current = this.createTestList();
-        lists = new ArrayList<List>();
-        lists.add(current);
-
-        when(service.editList(current, Integer.toString(current.getId())))
-                .thenReturn(lists);
-        assertEquals(1,service.getLists().size());
-
+        List list = this.createTestList();
+        Database.getLists().add(list);
+        when(service.editList(list, "1"))
+              .thenReturn(Database.getLists());
 
     }
 
     @Test
     void deleteList() {
+        Integer size_before = service.getLists().size();
+        when(service.deleteList("1"))
+                .thenReturn(Database.getLists());
+
+        Integer size_after = service.getLists().size();
+
+        assertEquals(size_before - 1, size_after);
     }
 
     @Test
     void getBySong() {
+
+        when(service.getBySong("Califonication"))
+                .thenReturn(Database.getLists());
+
+        assertEquals(Database.getLists().get(0),service.getBySong("Califonication"));
     }
 
     private List createTestList(){
