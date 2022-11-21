@@ -9,6 +9,6 @@ public class SongService {
    // SongRepository repo;
 
     public ArrayList<Song> songs() {
-       return SongRepository.initSongs();
+       return SongRepository.getSongs();
     }
 }
