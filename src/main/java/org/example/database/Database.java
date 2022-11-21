@@ -44,7 +44,12 @@ public class Database {
 
     public String insertLists(List list){
         Integer size = this.getLists().size();
-        list.setId(size +1);
+        Integer id = 1;
+        if(size>0){
+            List last = this.getLists().get(size - 1);
+            id = last.getId() +1;
+        }
+        list.setId(id);
         this.getLists().add(list);
 
         return this.lists();
@@ -58,11 +63,24 @@ public class Database {
 
     public String deleteList(List list){
         this.getLists().remove(list.getPosition());
+        this.updatePositions();
 
         return this.lists();
     }
     public ArrayList<List> getLists() {
         return lists;
     }
-
+    private void setLists(ArrayList<List> lists){
+        this.lists = lists;
+    }
+    private void updatePositions(){
+        ArrayList<List> aux = new ArrayList<List>();
+        Integer loop = 0;
+        for(List list: this.getLists()){
+            list.setPosition(loop);
+            aux.add(list);
+            loop++;
+        }
+        this.setLists(aux);
+    }
 }
